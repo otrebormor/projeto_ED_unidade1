@@ -1,5 +1,7 @@
 package EstruturaDados.TrabalhoPratico;
 
+import java.time.Instant;
+
 public class FilaAtendimento {
 	private No inicio;
     private No fim;
@@ -21,6 +23,8 @@ public class FilaAtendimento {
             fim.setProximo(novo);
             fim = novo;
         }
+
+        p.setHorarioInicio(Instant.now());
     }
 
     public Pessoa desenfileirar() {
@@ -28,6 +32,8 @@ public class FilaAtendimento {
         Pessoa p = inicio.getPessoa();
         inicio = inicio.getProximo();
         if (inicio == null) fim = null;
+
+        p.setHorarioFinal(Instant.now());
         return p;
     }
 

@@ -1,13 +1,10 @@
 package EstruturaDados.TrabalhoPratico;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class AppFila {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Pessoa> pessoasAtendidas = new ArrayList<>();
 
         Pessoa p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
         p1 = new Pessoa("jose1", 65);
@@ -64,8 +61,7 @@ public class AppFila {
             System.out.println("2 - Liberar atendimento");
             System.out.println("3 - Exibir filas");
             System.out.println("4 - Exibir guichês");
-            System.out.println("5 - Exibe atendidos");
-            System.out.println("6 - Sair");
+            System.out.println("5 - Sair");
             opcao = sc.nextInt();
             sc.nextLine();
 
@@ -75,7 +71,7 @@ public class AppFila {
                     break;
 
                 case 2:
-                    liberaAtendimento(pessoasAtendidas, guiches, filaComum, fila65, fila80);
+                    liberaAtendimento(guiches, filaComum, fila65, fila80);
                     break;
                 case 3:
                     exibeFilas(filaComum, fila65, fila80);
@@ -86,10 +82,6 @@ public class AppFila {
                     break;
 
                 case 5:
-                    exibeAtendidos(pessoasAtendidas);
-                    break;
-
-                case 6:
                     System.out.println("Saindo da aplicação....");
                     break;
 
@@ -119,84 +111,113 @@ public class AppFila {
             fila80.enfileirar(p);
     }
 
-    public static void liberaAtendimento(List<Pessoa> pessoasAtendidas, Guiche[] guiches, FilaAtendimento filaComum, FilaAtendimento fila65, FilaAtendimento fila80) {
-        for (Guiche g : guiches) { //As principais alterações foram aqui
+    public static void liberaAtendimento(Guiche[] guiches, FilaAtendimento filaComum, FilaAtendimento fila65, FilaAtendimento fila80) {
+        for (Guiche g : guiches) {
             Pessoa atendida = null;
             boolean foiPrioritario = false;
 
-            if (g.isPreferencial()) {
-                int cota80 = 2; //para facilitar a troca na regra de negócio
-                int cota65 = 1; //para facilitar a troca na regra de negócio
+            // CASO ESPECIAL: APENAS 1 GUICHÊ
+            if (guiches.length == 1) {
+                atendida = atenderComRegra3por1(g, filaComum, fila65, fila80);
+                if (atendida != null) {
+                    foiPrioritario = (atendida.getIdade() >= 65);
+                }
+            } else {
+                // LÓGICA ORIGINAL PARA MÚLTIPLOS GUICHÊS
+                if (g.isPreferencial()) {
+                    int cota80 = 2;
+                    int cota65 = 1;
 
-                if (!filaComum.isVazia() && g.getContadorPrioritarios80() >= cota80
-                        && g.getContadorPrioritarios65() >= cota65) {
-                    atendida = filaComum.desenfileirar();
-                    foiPrioritario = false;
-
-                } else {
-
-                    if (!fila80.isVazia() && g.getContadorPrioritarios80() < cota80) {
-                        atendida = fila80.desenfileirar();
-                        foiPrioritario = true;
-
-                    } else if (!fila65.isVazia() && g.getContadorPrioritarios65() < cota65) {
-                        atendida = fila65.desenfileirar();
-                        foiPrioritario = true;
-
-                    } else if (!filaComum.isVazia()) {
+                    if (!filaComum.isVazia() && g.getContadorPrioritarios80() >= cota80
+                            && g.getContadorPrioritarios65() >= cota65) {
                         atendida = filaComum.desenfileirar();
                         foiPrioritario = false;
-                    }
-                }
 
-                if (atendida == null) { // para evitar que os guiches fiquem sem trabalhar
-                    if (!fila80.isVazia()) {
+                    } else {
+                        if (!fila80.isVazia() && g.getContadorPrioritarios80() < cota80) {
+                            atendida = fila80.desenfileirar();
+                            foiPrioritario = true;
+
+                        } else if (!fila65.isVazia() && g.getContadorPrioritarios65() < cota65) {
+                            atendida = fila65.desenfileirar();
+                            foiPrioritario = true;
+
+                        } else if (!filaComum.isVazia()) {
+                            atendida = filaComum.desenfileirar();
+                            foiPrioritario = false;
+                        }
+                    }
+
+                    if (atendida == null) {
+                        if (!fila80.isVazia()) {
+                            atendida = fila80.desenfileirar();
+                            foiPrioritario = true;
+                            g.resetContador80();
+                            g.resetContador65();
+                        } else if (!fila65.isVazia()) {
+                            atendida = fila65.desenfileirar();
+                            foiPrioritario = true;
+                            g.resetContador80();
+                            g.resetContador65();
+                        }
+                    }
+
+                } else {
+                    if (!filaComum.isVazia()) {
+                        atendida = filaComum.desenfileirar();
+                        foiPrioritario = false;
+                    } else if (!fila80.isVazia()) {
                         atendida = fila80.desenfileirar();
                         foiPrioritario = true;
-                        g.resetContador80();
-                        g.resetContador65();
                     } else if (!fila65.isVazia()) {
                         atendida = fila65.desenfileirar();
                         foiPrioritario = true;
-                        g.resetContador80();
-                        g.resetContador65();
                     }
                 }
-
-            } else {// como teria guiches definidos para atender so usuários comuns, ele poderia
-                // ficar sem função
-
-                if (!filaComum.isVazia()) {
-                    atendida = filaComum.desenfileirar();
-                    foiPrioritario = false;
-
-                } else if (!fila80.isVazia()) {
-                    atendida = fila80.desenfileirar();
-                    foiPrioritario = true;
-                } else if (!fila65.isVazia()) {
-                    atendida = fila65.desenfileirar();
-                    foiPrioritario = true;
-                }
-            }
-
-            if (atendida != null) {//A parte do atendimento em ficou aqui.
-
-                g.atender(atendida, foiPrioritario);
-                System.out.println("Guichê " + (g.isPreferencial() ? "Preferencial" : "Comum") + ": Atendeu "//aqui foi para entender o que estava acontecendo
-                        + atendida.getNome() + " (" + atendida.getIdade() + " anos)");
-            } else {//caso as filas estejam vazias
-                System.out.println("Guichê " + (g.isPreferencial() ? "Preferencial" : "Comum") + ": Livre (Filas Vazias).");
             }
 
             if (atendida != null) {
-                g.atender(atendida, foiPrioritario);
-                pessoasAtendidas.add(atendida); // Adiciona à lista de atendidos
                 System.out.println("Guichê " + (g.isPreferencial() ? "Preferencial" : "Comum") + ": Atendeu "
                         + atendida.getNome() + " (" + atendida.getIdade() + " anos)");
-            }
 
+                g.atender(atendida, foiPrioritario);
+
+            } else {
+                System.out.println("Guichê " + (g.isPreferencial() ? "Preferencial" : "Comum") + ": Livre (Filas Vazias).");
+            }
         }
     }
+
+//      MÉTODO PARA REGRA 3 POR 1
+    private static Pessoa atenderComRegra3por1(Guiche guiche, FilaAtendimento filaComum, FilaAtendimento fila65, FilaAtendimento fila80) {
+
+
+        int totalPrioritarios = guiche.getTotalPrioritarios();
+
+        // REGRA PRINCIPAL: 3 prioritários → 1 comum
+        if (totalPrioritarios >= 3 && !filaComum.isVazia()) {
+            guiche.resetContador65();
+            guiche.resetContador80();
+            return filaComum.desenfileirar();
+        }
+
+        // SEQUÊNCIA DE PRIORIDADE
+        if (!fila80.isVazia()) {
+            return fila80.desenfileirar();
+        }
+
+        if (!fila65.isVazia()) {
+            return fila65.desenfileirar();
+        }
+
+        // comum se não há prioritários
+        if (!filaComum.isVazia()) {
+            return filaComum.desenfileirar();
+        }
+
+        return null;
+    }
+
 
     public static void exibeFilas(FilaAtendimento filaComum, FilaAtendimento fila65, FilaAtendimento fila80) {
         System.out.println("Fila comum:");
@@ -212,16 +233,5 @@ public class AppFila {
             System.out.println("Guichê " + (i + 1) + ": " + guiches[i]);
         }
     }
-
-    public static void exibeAtendidos(List<Pessoa> pessoasAtendidas) {
-        if (pessoasAtendidas.isEmpty()) {
-            System.out.println("Nenhum pessoa atendida.");
-        } else {
-            for (Pessoa p : pessoasAtendidas) {
-                System.out.println(p.getNome() + " - Duração: " + p.getDuracaoAtendimentoSegundos() + " segundos");
-            }
-        }
-    }
-
 
 }
