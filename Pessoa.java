@@ -12,22 +12,11 @@ public class Pessoa {
     public Pessoa(String nome, int idade) {
         this.idade = idade;
         this.nome = nome;
+        this.horarioInicio = Instant.now();
     }
 
     public Instant getHorarioFinal() {
         return horarioFinal;
-    }
-
-    public void setHorarioFinal(Instant horarioFinal) {
-        this.horarioFinal = horarioFinal;
-    }
-
-    public void setHorarioInicio(Instant horarioInicio) {
-        this.horarioInicio = horarioInicio;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getNome() {
@@ -45,13 +34,13 @@ public class Pessoa {
 
     public long getDuracaoAtendimentoSegundos() {
         if (horarioFinal != null && horarioInicio != null) {
-            return Duration.between(horarioInicio, horarioFinal).getSeconds();
+            return Duration.between(horarioInicio, horarioFinal).toMillis();
         }
         return -1; // ou outro valor para indicar que não terminou
     }
 
     public String toString() {
-        return "Nome: "+this.nome + " - idade: " + this.idade +" anos - Entrou na fila: "+ this.horarioInicio + " - Atendido em: " + (horarioFinal != null ? horarioFinal : "Ainda não atendido") + (horarioFinal != null ? " - Duração do atendimento: " + getDuracaoAtendimentoSegundos() + " segundos" : "");
+        return "Nome: "+this.nome + " - idade: " + this.idade +" anos ";
     }
 
     public void fimAtendimento() {
