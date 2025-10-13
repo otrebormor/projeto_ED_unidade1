@@ -74,7 +74,7 @@ public class AppFila {
 
             switch (opcao) {
                 case 1:
-                    inserePessoa( sc, filaComum, fila65, fila80);
+                    inserePessoa(sc, filaComum, fila65, fila80);
                     break;
 
                 case 2:
@@ -110,7 +110,7 @@ public class AppFila {
     }
 
 
-    public static void inserePessoa(FilaAtendimento filaComum, FilaAtendimento fila65, FilaAtendimento fila80) {
+    public static void inserePessoa(Scanner sc, FilaAtendimento filaComum, FilaAtendimento fila65, FilaAtendimento fila80) {
        
         System.out.print("Nome: ");
         String nome = sc.nextLine();
