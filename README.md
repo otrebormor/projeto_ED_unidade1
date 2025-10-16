@@ -109,11 +109,10 @@ java EstruturaDados.TrabalhoPratico.AppFila
 2 - Liberar atendimento
 3 - Exibir estado da fila
 4 - Exibir guichês
-5 - Exibe ordem de atendimento
-6 - Tempo médio das pessoas em geral
-7 - Tempo médio das pessoas comuns
-8 - Tempo médio das pessoas prioritárias
-9 - Sair
+5 - Tempo médio das pessoas em geral
+6 - Tempo médio das pessoas comuns
+7 - Tempo médio das pessoas prioritárias
+8 - Sair
 ```
 
 ### Fluxo de Uso Básico
@@ -122,7 +121,7 @@ java EstruturaDados.TrabalhoPratico.AppFila
 2. **Adicionar pessoas:** Opção 1 - cadastre nome e idade
 3. **Liberar atendimento:** Opção 2 - processa um ciclo de atendimento
 4. **Visualizar filas:** Opção 3 - veja quem está esperando
-5. **Ver estatísticas:** Opções 6-8 - analise tempos médios de espera
+5. **Ver estatísticas:** Opções 5-7 - analise tempos médios de espera
 
 ## 💡 Conceitos de Estrutura de Dados
 
