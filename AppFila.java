@@ -28,17 +28,16 @@ public class AppFila {
         }
 
         int opcao = 0;
-        while (opcao != 5) {
+        while (opcao != 8) {
             System.out.println("\n--- MENU ---");
             System.out.println("1 - Incluir pessoa");
             System.out.println("2 - Liberar atendimento");
             System.out.println("3 - Exibir estado da fila");
             System.out.println("4 - Exibir guichês");
-            System.out.println("5 - Exibe ordem de atendimento");
-            System.out.println("6 - Tempo médio das pessoas em geral: ");
-            System.out.println("7 - Tempo médio das pessoas comuns: ");
-            System.out.println("8 - Tempo médio das pessoas prioritárias: ");
-            System.out.println("9 - Sair");
+			System.out.println("5 - Tempo médio das pessoas em geral: ");
+			System.out.println("6 - Tempo médio das pessoas comuns: ");
+			System.out.println("7 - Tempo médio das pessoas prioritárias: ");
+			System.out.println("8 - Sair");
             opcao = sc.nextInt();
             sc.nextLine();
 
@@ -122,5 +121,6 @@ public class AppFila {
         }
         return 0;
     }
+
 
 }
