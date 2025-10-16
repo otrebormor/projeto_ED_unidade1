@@ -40,7 +40,7 @@ public class Pessoa {
     }
 
     public String toString() {
-        return "Nome: "+this.nome + " - idade: " + this.idade +" anos ";
+        return "Nome: " + this.nome + " - idade: " + this.idade + " anos ";
     }
 
     public void fimAtendimento() {

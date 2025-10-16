@@ -7,53 +7,23 @@ public class AppFila {
         Scanner sc = new Scanner(System.in);
 
         FilaAtendimento filaComum = new FilaAtendimento();
-		FilaAtendimento fila65 = new FilaAtendimento();
-		FilaAtendimento fila80 = new FilaAtendimento();
-		FilaAtendimento guarda = new FilaAtendimento();// essa fila serve para exibir a ordem teórica de atendimento
+        FilaAtendimento fila65 = new FilaAtendimento();
+        FilaAtendimento fila80 = new FilaAtendimento();
+        FilaAtendimento guarda = new FilaAtendimento();
 
 
-    // O trecho abaixo será deletado antes de enviar à professora
-        Pessoa p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12;
-        p1 = new Pessoa("jose1", 65);
-        p2 = new Pessoa("maria1", 80);
-        p3 = new Pessoa("josefa1", 80);
-        p4 = new Pessoa("jose2", 65);
-        p5 = new Pessoa("maria2", 80);
-        p6 = new Pessoa("josefa2", 80);
-        p7 = new Pessoa("jose3", 23);
-        p8 = new Pessoa("maria3", 45);
-        p9 = new Pessoa("josefa3", 55);
-        p10 = new Pessoa("jose4", 67);
-        p11 = new Pessoa("maria4", 87);
-        p12 = new Pessoa("josefa4", 90);
-
-        fila65.enfileirar(p1);
-        fila80.enfileirar(p2);
-        fila80.enfileirar(p3);
-        fila65.enfileirar(p4);
-        fila80.enfileirar(p5);
-        fila80.enfileirar(p6);
-        filaComum.enfileirar(p7);
-        filaComum.enfileirar(p8);
-        filaComum.enfileirar(p9);
-        fila65.enfileirar(p10);
-        fila80.enfileirar(p11);
-        fila80.enfileirar(p12);
-        // O trecho acima será deletado antes de enviar à professora
-
-        // prgunta quantos guichês
         System.out.print("Digite o número de guichês: ");
         int qtd = sc.nextInt();
         Guiche[] guiches = new Guiche[qtd];
 
-        // dividir guichês (se ímpar, extra vai para preferenciais)
+
         int comuns = qtd / 2;
 
         for (int i = 0; i < qtd; i++) {
             if (i < comuns) {
-                guiches[i] = new Guiche(false); // comuns
+                guiches[i] = new Guiche(false);
             } else {
-                guiches[i] = new Guiche(true); // preferenciais
+                guiches[i] = new Guiche(true);
             }
         }
 
@@ -65,10 +35,10 @@ public class AppFila {
             System.out.println("3 - Exibir estado da fila");
             System.out.println("4 - Exibir guichês");
             System.out.println("5 - Exibe ordem de atendimento");
-			System.out.println("6 - Tempo médio das pessoas em geral: ");
-			System.out.println("7 - Tempo médio das pessoas comuns: ");
-			System.out.println("8 - Tempo médio das pessoas prioritárias: ");
-			System.out.println("9 - Sair");
+            System.out.println("6 - Tempo médio das pessoas em geral: ");
+            System.out.println("7 - Tempo médio das pessoas comuns: ");
+            System.out.println("8 - Tempo médio das pessoas prioritárias: ");
+            System.out.println("9 - Sair");
             opcao = sc.nextInt();
             sc.nextLine();
 
@@ -89,17 +59,17 @@ public class AppFila {
                     break;
 
                 case 5:
-				System.out.println("O tempo médio de todos os atendidos foi: "+ tempoMedio(fila65,fila80,filaComum) + " milissegundos");
-				break;
-			    case 6:
-				System.out.println("O tempo médio das pessoas comuns foi: "+ tempoMedio(filaComum) + " milissegundos");
-				break;
-			    case 7:
-				System.out.println("O tempo médio das pessoas prioritárias foi: "+ tempoMedio(fila65,fila80)+ " milissegundos");
-				break;
-			    case 8:
-				System.out.println("Saindo da aplicação....");
-				break;
+                    System.out.println("O tempo médio de todos os atendidos foi: " + tempoMedio(fila65, fila80, filaComum) + " milissegundos");
+                    break;
+                case 6:
+                    System.out.println("O tempo médio das pessoas comuns foi: " + tempoMedio(filaComum) + " milissegundos");
+                    break;
+                case 7:
+                    System.out.println("O tempo médio das pessoas prioritárias foi: " + tempoMedio(fila65, fila80) + " milissegundos");
+                    break;
+                case 8:
+                    System.out.println("Saindo da aplicação....");
+                    break;
 
                 default:
                     System.out.println("Digite uma opção válida! tente novamente.");
@@ -109,9 +79,8 @@ public class AppFila {
 
     }
 
-
     public static void inserePessoa(Scanner sc, FilaAtendimento filaComum, FilaAtendimento fila65, FilaAtendimento fila80) {
-       
+
         System.out.print("Nome: ");
         String nome = sc.nextLine();
         System.out.print("Idade: ");
@@ -124,7 +93,7 @@ public class AppFila {
             fila65.enfileirar(p);
         else
             fila80.enfileirar(p);
-    }   
+    }
 
     public static void exibeGuiches(Guiche[] guiches) {
         for (int i = 0; i < guiches.length; i++) {
@@ -132,25 +101,26 @@ public class AppFila {
         }
     }
 
-    //Os métodos abaixo são para exibir o tempo de permanência. Usei subrecarga de método nesse ponto.
     public static double tempoMedio(FilaAtendimento fila1) {
-		if (fila1.getNumPessoa()!=0) {
-			return fila1.getTempoTotal()/fila1.getNumPessoa();
-		}
-		return 0;
-	}
-	public static double tempoMedio(FilaAtendimento fila1, FilaAtendimento fila2) {
-		if (fila1.getNumPessoa()!=0 || fila2.getNumPessoa()!=0) {
-			
-			return (fila1.getTempoTotal()+fila2.getTempoTotal())/(fila1.getNumPessoa()+fila2.getNumPessoa());
-		}
-		return 0;
-	}
-	public static double tempoMedio(FilaAtendimento fila1, FilaAtendimento fila2, FilaAtendimento fila3) {
-		if (fila1.getNumPessoa()!=0 || fila2.getNumPessoa()!=0||fila3.getNumPessoa()!=0) {
-			return (fila1.getTempoTotal()+fila2.getTempoTotal()+fila3.getTempoTotal())/(fila1.getNumPessoa()+fila2.getNumPessoa()+ fila3.getNumPessoa());
-		}
-		return 0;
-	}
+        if (fila1.getNumPessoa() != 0) {
+            return fila1.getTempoTotal() / fila1.getNumPessoa();
+        }
+        return 0;
+    }
+
+    public static double tempoMedio(FilaAtendimento fila1, FilaAtendimento fila2) {
+        if (fila1.getNumPessoa() != 0 || fila2.getNumPessoa() != 0) {
+
+            return (fila1.getTempoTotal() + fila2.getTempoTotal()) / (fila1.getNumPessoa() + fila2.getNumPessoa());
+        }
+        return 0;
+    }
+
+    public static double tempoMedio(FilaAtendimento fila1, FilaAtendimento fila2, FilaAtendimento fila3) {
+        if (fila1.getNumPessoa() != 0 || fila2.getNumPessoa() != 0 || fila3.getNumPessoa() != 0) {
+            return (fila1.getTempoTotal() + fila2.getTempoTotal() + fila3.getTempoTotal()) / (fila1.getNumPessoa() + fila2.getNumPessoa() + fila3.getNumPessoa());
+        }
+        return 0;
+    }
 
 }

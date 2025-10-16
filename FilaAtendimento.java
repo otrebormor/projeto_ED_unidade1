@@ -3,7 +3,7 @@ package EstruturaDados.TrabalhoPratico;
 import java.time.Instant;
 
 public class FilaAtendimento {
-	private No inicio;
+    private No inicio;
     private No fim;
     private int tempoTotal;
     private int numPessoa;
@@ -30,7 +30,7 @@ public class FilaAtendimento {
     public Pessoa desenfileirar() {
         if (isVazia()) return null;
         inicio.getPessoa().fimAtendimento();
-        this.tempoTotal+=this.inicio.getPessoa().getDuracaoAtendimentoSegundos();
+        this.tempoTotal += this.inicio.getPessoa().getDuracaoAtendimentoSegundos();
         Pessoa p = inicio.getPessoa();
         inicio = inicio.getProximo();
         if (inicio == null) fim = null;
@@ -48,35 +48,37 @@ public class FilaAtendimento {
             atual = atual.getProximo();
         }
     }
+
     public int getTempoTotal() {
-		return tempoTotal;
-	}
+        return tempoTotal;
+    }
 
-	public int getNumPessoa() {
-		return numPessoa;
-	}
+    public int getNumPessoa() {
+        return numPessoa;
+    }
 
-	public No getInicio() {
-		return inicio;
-	}
+    public No getInicio() {
+        return inicio;
+    }
+
     public FilaAtendimento copiarFila() {
-	    
-	    FilaAtendimento copiaDaFila = new FilaAtendimento();
 
-	    No atual = this.inicio; 
-	    
-	    while (atual != null) {
-	        Pessoa pessoaOriginal = atual.getPessoa();
-            // Cópia profunda da Pessoa para que o horário final não afete a pessoa original
-	        Pessoa novaPessoa = new Pessoa(pessoaOriginal.getNome(), pessoaOriginal.getIdade());        
-	        copiaDaFila.enfileirar(novaPessoa); 
-	        atual = atual.getProximo();
-	    }
-	    
-	    return copiaDaFila;
-	}
-	public void limpaFila() {//Usado para limpar a fila teórica, evitando que as pessoas sejam colacadas na fila várias vezes
-		this.inicio = this.fim= null;
-	}
+        FilaAtendimento copiaDaFila = new FilaAtendimento();
+
+        No atual = this.inicio;
+
+        while (atual != null) {
+            Pessoa pessoaOriginal = atual.getPessoa();
+            Pessoa novaPessoa = new Pessoa(pessoaOriginal.getNome(), pessoaOriginal.getIdade());
+            copiaDaFila.enfileirar(novaPessoa);
+            atual = atual.getProximo();
+        }
+
+        return copiaDaFila;
+    }
+
+    public void limpaFila() {//Usado para limpar a fila teórica, evitando que as pessoas sejam colacadas na fila várias vezes
+        this.inicio = this.fim = null;
+    }
 
 }
