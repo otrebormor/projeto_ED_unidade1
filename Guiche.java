@@ -16,7 +16,7 @@ public class Guiche {
 	}
 
     
- // Guiche.java - Método atender() Corrigido
+
     public void atender(Pessoa p, boolean foiPrioritario) {
         this.pessoaAtendida = p;
         if (p == null) return;
@@ -30,3 +30,4 @@ public class Guiche {
 		return "Atendendo: " + pessoaAtendida.getNome();
 	}
 }
+
