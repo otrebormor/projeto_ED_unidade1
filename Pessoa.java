@@ -36,7 +36,7 @@ public class Pessoa {
         if (horarioFinal != null && horarioInicio != null) {
             return Duration.between(horarioInicio, horarioFinal).toMillis();
         }
-        return -1; // ou outro valor para indicar que não terminou
+        return -1;
     }
 
     public String toString() {
