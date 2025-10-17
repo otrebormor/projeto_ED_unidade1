@@ -16,32 +16,29 @@ public class GerenciadorDeAtendimento {
         for (Guiche g : guiches) {
             if (g.isPreferencial()) {
                 Pessoa atendida = null;
-                boolean foiPrioritario = false;
 
 
                 if (!filaComum.isVazia() && GerenciadorDeAtendimento.contadorGlobalCiclo >= MAX_CICLO) {
                     atendida = filaComum.desenfileirar();
                     GerenciadorDeAtendimento.contadorGlobalCiclo = 0;
-                    foiPrioritario = false;
+
 
                 } else {
 
                     if (!fila80.isVazia() && GerenciadorDeAtendimento.contadorGlobalCiclo < MAX_80) {
                         atendida = fila80.desenfileirar();
                         GerenciadorDeAtendimento.contadorGlobalCiclo++;
-                        foiPrioritario = true;
 
 
                     } else if (!fila65.isVazia() && GerenciadorDeAtendimento.contadorGlobalCiclo >= MAX_80
                             && GerenciadorDeAtendimento.contadorGlobalCiclo < MAX_CICLO) {
                         atendida = fila65.desenfileirar();
                         GerenciadorDeAtendimento.contadorGlobalCiclo++;
-                        foiPrioritario = true;
 
 
                     } else if (!filaComum.isVazia() && fila80.isVazia() && fila65.isVazia()) {
                         atendida = filaComum.desenfileirar();
-                        foiPrioritario = false;
+
                     }
                 }
 
@@ -51,12 +48,12 @@ public class GerenciadorDeAtendimento {
                         atendida = fila80.desenfileirar();
 
                         GerenciadorDeAtendimento.contadorGlobalCiclo = 1;
-                        foiPrioritario = true;
+
                     } else if (!fila65.isVazia()) {
                         atendida = fila65.desenfileirar();
 
                         GerenciadorDeAtendimento.contadorGlobalCiclo = MAX_CICLO;
-                        foiPrioritario = true;
+
                     }
                 }
 
@@ -67,7 +64,7 @@ public class GerenciadorDeAtendimento {
 
                 if (atendida != null) {
 
-                    g.atender(atendida, foiPrioritario);
+                    g.atender(atendida);
                     System.out.println("Guichê Preferencial: Atendeu " + atendida.getNome() + " (" + atendida.getIdade()
                             + " anos)");
                 } else {
@@ -80,22 +77,22 @@ public class GerenciadorDeAtendimento {
         for (Guiche g : guiches) {
             if (!g.isPreferencial()) {
                 Pessoa atendida = null;
-                boolean foiPrioritario = false;
+
 
                 if (!filaComum.isVazia()) {
                     atendida = filaComum.desenfileirar();
-                    foiPrioritario = false;
+
                 } else if (!fila65.isVazia()) {
                     atendida = fila65.desenfileirar();
-                    foiPrioritario = true;
+
                 } else if (!fila80.isVazia()) {
                     atendida = fila80.desenfileirar();
-                    foiPrioritario = true;
+
                 }
 
                 if (atendida != null) {
 
-                    g.atender(atendida, foiPrioritario);
+                    g.atender(atendida);
                     System.out.println(
                             "Guichê Comum: Atendeu " + atendida.getNome() + " (" + atendida.getIdade() + " anos)");
                 } else {
@@ -123,29 +120,29 @@ public class GerenciadorDeAtendimento {
             for (Guiche g : guiches) {
                 if (g.isPreferencial()) {
                     Pessoa atendida = null;
-                    
+
                     if (!copiaFilaComum.isVazia() && GerenciadorDeAtendimento.contadorGlobalCiclo >= MAX_CICLO) {
                         atendida = copiaFilaComum.desenfileirar();
-                        GerenciadorDeAtendimento.contadorGlobalCiclo = 0;                       
+                        GerenciadorDeAtendimento.contadorGlobalCiclo = 0;
                         guarda.enfileirar(atendida);
 
                     } else {
 
                         if (!copiaFila80.isVazia() && GerenciadorDeAtendimento.contadorGlobalCiclo < MAX_80) {
                             atendida = copiaFila80.desenfileirar();
-                            GerenciadorDeAtendimento.contadorGlobalCiclo++;                            
+                            GerenciadorDeAtendimento.contadorGlobalCiclo++;
                             guarda.enfileirar(atendida);
 
 
                         } else if (!copiaFila65.isVazia() && GerenciadorDeAtendimento.contadorGlobalCiclo >= MAX_80
                                 && GerenciadorDeAtendimento.contadorGlobalCiclo < MAX_CICLO) {
                             atendida = copiaFila65.desenfileirar();
-                            GerenciadorDeAtendimento.contadorGlobalCiclo++;                           
+                            GerenciadorDeAtendimento.contadorGlobalCiclo++;
                             guarda.enfileirar(atendida);
 
 
                         } else if (!copiaFilaComum.isVazia() && copiaFila80.isVazia() && copiaFila65.isVazia()) {
-                            atendida = copiaFilaComum.desenfileirar();                           
+                            atendida = copiaFilaComum.desenfileirar();
                             guarda.enfileirar(atendida);
                         }
                     }
@@ -154,11 +151,11 @@ public class GerenciadorDeAtendimento {
                     if (atendida == null) {
                         if (!copiaFila80.isVazia()) {
                             atendida = copiaFila80.desenfileirar();
-                            GerenciadorDeAtendimento.contadorGlobalCiclo = 1;                            
+                            GerenciadorDeAtendimento.contadorGlobalCiclo = 1;
                             guarda.enfileirar(atendida);
                         } else if (!copiaFila65.isVazia()) {
                             atendida = copiaFila65.desenfileirar();
-                            GerenciadorDeAtendimento.contadorGlobalCiclo = MAX_CICLO;                           
+                            GerenciadorDeAtendimento.contadorGlobalCiclo = MAX_CICLO;
                             guarda.enfileirar(atendida);
                         }
                     }
@@ -173,16 +170,16 @@ public class GerenciadorDeAtendimento {
 
             for (Guiche g : guiches) {
                 if (!g.isPreferencial()) {
-                    Pessoa atendida = null;                   
+                    Pessoa atendida = null;
 
                     if (!copiaFilaComum.isVazia()) {
-                        atendida = copiaFilaComum.desenfileirar();                        
+                        atendida = copiaFilaComum.desenfileirar();
                         guarda.enfileirar(atendida);
                     } else if (!copiaFila65.isVazia()) {
-                        atendida = copiaFila65.desenfileirar();                        
+                        atendida = copiaFila65.desenfileirar();
                         guarda.enfileirar(atendida);
                     } else if (!copiaFila80.isVazia()) {
-                        atendida = copiaFila80.desenfileirar();                       
+                        atendida = copiaFila80.desenfileirar();
                         guarda.enfileirar(atendida);
                     }
 

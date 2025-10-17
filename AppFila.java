@@ -28,6 +28,7 @@ public class AppFila {
         }
 
         int opcao = 0;
+
         while (opcao != 8) {
             System.out.println("\n--- MENU ---");
             System.out.println("1 - Incluir pessoa");
@@ -109,7 +110,6 @@ public class AppFila {
 
     public static double tempoMedio(FilaAtendimento fila1, FilaAtendimento fila2) {
         if (fila1.getNumPessoa() != 0 || fila2.getNumPessoa() != 0) {
-
             return (fila1.getTempoTotal() + fila2.getTempoTotal()) / (fila1.getNumPessoa() + fila2.getNumPessoa());
         }
         return 0;

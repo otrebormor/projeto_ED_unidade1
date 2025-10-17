@@ -31,7 +31,6 @@ public class Pessoa {
         return this.horarioInicio;
     }
 
-
     public long getDuracaoAtendimentoSegundos() {
         if (horarioFinal != null && horarioInicio != null) {
             return Duration.between(horarioInicio, horarioFinal).toMillis();

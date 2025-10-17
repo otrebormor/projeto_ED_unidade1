@@ -1,7 +1,5 @@
 package EstruturaDados.TrabalhoPratico;
 
-import java.time.Instant;
-
 public class FilaAtendimento {
     private No inicio;
     private No fim;
@@ -77,7 +75,7 @@ public class FilaAtendimento {
         return copiaDaFila;
     }
 
-    public void limpaFila() {//Usado para limpar a fila teórica, evitando que as pessoas sejam colacadas na fila várias vezes
+    public void limpaFila() {
         this.inicio = this.fim = null;
     }
 
